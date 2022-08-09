@@ -48,7 +48,7 @@ class Program
             description: "The password you use to login into Telegram.");
         passwordOption.AddAlias("-p");
 
-        var loginCommand = new Command("login", "Login using phone number and an authorization code sent to the app")
+        var loginCommand = new Command("login", "Login using phone number and an authorization code sent to the app.")
         {
             phoneNumberOption,
             passwordOption,
