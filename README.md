@@ -2,6 +2,10 @@
 
 This is a very simple Telegram CLI Application written in C#. You need to be a registered user of Telegram to use this application.
 
+## API Key Registration
+
+You need to update `tikoi/Program.cs` with the `ApiHash` & `ApiId` from [my.telegram.org/apps](https://my.telegram.org/apps).
+
 ## Commands
 
 ```
@@ -53,8 +57,6 @@ Options:
   -n, --max-messages <max-messages>  The maximum number of messages to download from chat conversation. [default: 25]
   -?, -h, --help                     Show help and usage information
 ```
-
-Find the API Key and the Secret from [my.telegram.org/apps](https://my.telegram.org/apps).
 
 ## Chat
 
