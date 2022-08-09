@@ -6,5 +6,5 @@ Find the API Key and the Secret from [my.telegram.org/apps](https://my.telegram.
 
 ## References
 
-    - [Telegram TDLIB](https://core.tlgr.org/tdlib/docs/)
-    - [Building TDLIB](https://tdlib.github.io/td/build.html)
+- [Telegram TDLIB](https://core.tlgr.org/tdlib/docs/)
+- [Building TDLIB](https://tdlib.github.io/td/build.html)
