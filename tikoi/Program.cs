@@ -6,34 +6,9 @@ namespace tikoi;
 
 class Program
 {
-    /// <summary>
-    /// You need to replace some of the values here with values from your API Registration https://my.telegram.org/apps.
-    ///
-    /// Values that needs to be replaced:
-    ///     1. ApplicationVersion - your own Versioning
-    ///     2. ApiHash - from API Registration
-    ///     3. ApiId - from API Registration
-    /// </summary>
-    private static readonly TdApi.TdlibParameters LibParams = new()
-    {
-        DatabaseDirectory = "tdlib",
-        SystemLanguageCode = "en",
-        DeviceModel = "Desktop",
-        UseSecretChats = true,
-        UseMessageDatabase = true,
-        EnableStorageOptimizer = true,
-        ApplicationVersion = "0.0.1",
-        ApiHash = "",
-        ApiId = 0,
-    };
-
     static async Task<int> Main(string[] args)
     {
-        using var client = new TdClient();
-        await client.SetLogVerbosityLevelAsync(0);
-
-        var engine = new Engine(client, LibParams);
-
+        var engine = new Engine();
         var rootCommand = new RootCommand("This is a very simple Telegram CLI application.");
 
         #region Login Command

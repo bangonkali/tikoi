@@ -7,19 +7,45 @@ using TdLib;
 
 public class Engine
 {
-    private readonly TdClient _client;
+    private TdClient? _client;
     private string? _phoneNumber;
     private string? _password;
-    private readonly TdApi.TdlibParameters _libParams;
+    private TdApi.TdlibParameters? _libParams = null;
 
     private volatile bool _isOnAuthLoop = true;
 
-    public Engine(TdClient client, TdApi.TdlibParameters libParams)
+    private async Task InitParams()
     {
-        _client = client;
-        _libParams = libParams;
-
         Subscribe();
+        
+        if (_libParams == null)
+        {
+            int appId = 0;
+            string? strAppId = Environment.GetEnvironmentVariable("TIKOI_API_ID");
+            if (string.IsNullOrEmpty(strAppId)) 
+                throw new Exception("Undefined environment variable TIKOI_API_ID.");
+            if (int.TryParse(strAppId, out appId))
+                throw new Exception("Invalid environment variable TIKOI_API_ID.");
+            string? strApiHash = Environment.GetEnvironmentVariable("TIKOI_API_HASH");
+            if (strApiHash != null && string.IsNullOrEmpty(strApiHash) && strApiHash.Length < 10) 
+                throw new Exception("Undefined environment variable TIKOI_API_HASH.");
+            _libParams = new()
+            {
+                DatabaseDirectory = "tdlib",
+                SystemLanguageCode = "en",
+                DeviceModel = "Desktop",
+                UseSecretChats = true,
+                UseMessageDatabase = true,
+                EnableStorageOptimizer = true,
+                ApplicationVersion = "0.0.1",
+                ApiHash = strApiHash,
+                ApiId = appId,
+            };
+        }
+
+        _client ??= new TdClient();
+        
+        await _client.SetLogVerbosityLevelAsync(0);
     }
 
     private void Subscribe()
@@ -140,6 +166,7 @@ public class Engine
 
     public async Task ChatMessages(long chatId, int max, bool download)
     {
+        await InitParams();
         await AuthorizeLoop();
 
         Console.WriteLine($"Downloading messages from {chatId}");
@@ -173,6 +200,7 @@ public class Engine
 
     public async Task Chats()
     {
+        await InitParams();
         await AuthorizeLoop();
 
         Console.WriteLine($"Downloading chats");
@@ -190,6 +218,7 @@ public class Engine
 
     public async Task Login(string phoneNumber, string password)
     {
+        await InitParams();
         _phoneNumber = phoneNumber;
         _password = password;
 
@@ -198,6 +227,7 @@ public class Engine
 
     public async Task Logout()
     {
+        await InitParams();
         await AuthorizeLoop();
         await _client.LogOutAsync();
         Clean();
