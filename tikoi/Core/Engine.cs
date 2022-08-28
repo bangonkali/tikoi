@@ -258,7 +258,15 @@ public class Engine
             foreach (var message in messageIds)
             {
                 Console.Write(value: $"{indexId.PadByMax(max: max)} ");
-                await IntrospectMessage(chat: chat, messageId: message.Id, download: download, max: max);
+                try
+                {
+                    await IntrospectMessage(chat: chat, messageId: message.Id, download: download, max: max);
+                }
+                catch
+                {
+                    Console.WriteLine("Unable to find Message");
+                }
+
                 indexId++;
             }
         }
