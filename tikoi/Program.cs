@@ -13,25 +13,15 @@ class Program
 
         #region Login Command
 
-        var phoneNumberOption = new Option<string>(
-            name: "--phoneNumber",
-            description: "The number should be in the following format +639197134060.");
-        phoneNumberOption.AddAlias("-n");
-
-        var passwordOption = new Option<string>(
-            name: "--password",
-            description: "The password you use to login into Telegram.");
-        passwordOption.AddAlias("-p");
-
         var loginCommand = new Command("login", "Login using phone number and an authorization code sent to the app.")
         {
-            phoneNumberOption,
-            passwordOption,
+            IsHidden = false,
+            TreatUnmatchedTokensAsErrors = false,
+            Handler = null
         };
 
         loginCommand.SetHandler(
-            async (phoneNumber, password) => { await engine.Login(phoneNumber, password); },
-            phoneNumberOption, passwordOption);
+            async () => { await engine.Login(); });
 
         #endregion
 
@@ -47,8 +37,7 @@ class Program
         var chatCommand = new Command("chat", "Show all chats.");
 
         chatCommand.SetHandler(
-            async (phoneNumber, password) => { await engine.Chats(); },
-            phoneNumberOption, passwordOption);
+            async () => { await engine.Chats(); });
 
         #endregion
 
