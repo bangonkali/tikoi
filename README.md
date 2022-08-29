@@ -6,6 +6,18 @@ This is a very simple Telegram CLI Application written in C#. You need to be a r
 
 You need to update `tikoi/Program.cs` with the `ApiHash` & `ApiId` from [my.telegram.org/apps](https://my.telegram.org/apps).
 
+## Required Environmennt Variables
+
+You may substitute your own values and deploy the following in your `$HOME/.zshrc` or `$HOME/.bashrc`.
+
+```bash
+export TIKOI_API_ID="9999999"
+export TIKOI_API_HASH="abcdefghjijklmnopqrstuvwxyz12345"
+export TIKOI_PHONE_NUMBER="+999999999999"
+export TIKOI_PASSWORD="mypassword"
+export TIKOI_HOME="/opt/tikoi" # This is where tdlib stuff are stored
+```
+
 ## Commands
 
 ```
@@ -37,8 +49,6 @@ Usage:
   tikoi login [options]
 
 Options:
-  -n, --phoneNumber <phoneNumber>  The number should be in the following format +639197134060.
-  -p, --password <password>        The password you use to login into Telegram.
   -?, -h, --help                   Show help and usage information
 ```
 
